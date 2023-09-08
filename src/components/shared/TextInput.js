@@ -7,7 +7,7 @@ const TextInput = ({
         <div
              className={`textInputDiv flex flex-col space-y-2 w-full ${className}`}
         >
-            <label for={label}>
+            <label for={label} className = {`font-semibold`}>
                 {label}
             </label>
             <input
