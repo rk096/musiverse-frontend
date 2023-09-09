@@ -1,5 +1,6 @@
 import logo from '../logo.png'
 import IconText from '../components/shared/IconText';
+import TextWithHover from '../components/shared/TextWitHover';
 import { Icon } from "@iconify/react";
 
 const Home = () => {
@@ -10,7 +11,7 @@ const Home = () => {
 
                 {/* logo */}
                 <div className="logo p-5 w-full flex items-center justify-center">
-                    <img src={logo} width="60" height="60" className="mr-2" alt="logo" />
+                    <img src={logo} width="50" height="50" className="mr-2" alt="logo" />
                     <h1 className="text-2xl font-semibold text-center text-white">Musiverse</h1>
 
                 </div>
@@ -41,7 +42,6 @@ const Home = () => {
                     />
                 </div>
             </div>
-            {/* right panel */}
             <div className="px-5">
                 <div className="border border-gray-400 text-white w-2/5 flex px-2 py-1 rounded-full items-center justify-center hover:border-white cursor-pointer">
                     <Icon icon="carbon:earth-europe-africa" />
@@ -50,6 +50,26 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+        </div>
+        {/* right panel */}
+        <div className='h-full w-4/5 bg-app-black'>
+            <div className='navbar w-full h-1/10 bg-black bg-opacity-30 flex items-center justify-end'>
+                <div className='w-1/2 flex h-full'>
+                    <div className='w-3/5 flex justify-around items-center'>
+                        <TextWithHover displayText={"Premium"} />
+                        <TextWithHover displayText={"Support"} />
+                        <TextWithHover displayText={"Download"} />
+                        <div className='h-1/2 border border-white'></div>
+                    </div>
+                    <div className='w-2/5 flex justify-around h-full items-center'>
+                        <TextWithHover displayText={"Sign up"} />
+                        <div className='bg-white h-2/3 px-8 flex items-center justify-center rounded-full font-semibold cursor-pointer'>
+                            Log in
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className='content'></div>
         </div>
     </div>);
 }
