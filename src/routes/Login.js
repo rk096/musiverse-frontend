@@ -1,4 +1,4 @@
-import logo from '../logo.jpg'
+import logo from '../logo.png'
 import TextInput from "../components/shared/TextInput";
 import {Link} from "react-router-dom";
 import './login.css';
@@ -9,8 +9,8 @@ const LoginComponent = () => {
     return (
         <div className="w-full h-full flex flex-col items-center">
             <div className="logo p-5 border-b border-solid border-gray-300 w-full flex items-center justify-center">
-                <img src={logo} width="100" height="50" className="mr-2" />
-                <h1 className="text-xl font-semibold text-center text-gray-800">Musiverse</h1>
+                <img src={logo} width="60" height="60" className="mr-2" />
+                <h1 className="text-2xl font-semibold text-center text-gray-800">Musiverse</h1>
             </div>
 
             <div className="inputRegion w-1/3 py-10 flex items-center justify-center flex-col">

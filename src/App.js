@@ -14,7 +14,6 @@ function App() {
           <Route path="/signup" element={<SignupComponent/>} />
           <Route path="/login" element={<LoginComponent/>} />
           <Route path="/home" element={<HomeComponent/>} />
-
         </Routes>
       </BrowserRouter>
     </div>
