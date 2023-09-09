@@ -69,8 +69,47 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className='content'></div>
+            <div className='content p-8'>
+                <PlaylistView />
+            </div>
         </div>
     </div>);
+}
+
+const PlaylistView = () => {
+    return (
+        <div className='text-white'>
+            <div className='text-2xl font-semibold mb-5'>
+                Focus
+            </div>
+            <div className='w-full flex justify-between'>
+                <Card title="pianoddvs" description="jshfjfddhf" />
+                <Card title="piano" description="jshfjfddhfdcsf" />
+                <Card title="piano" description="jshfjfddhf" />
+                <Card title="piano" description="jshfjfddhf" />
+                <Card title="piano" description="jshfjfddhf" />
+            </div>
+        </div>)
+}
+
+const Card = ({ title, description }) => {
+    return (
+        <div className='bg-black bg-opacity-60  rounded-lg w-1/6 p-4'>
+            <div className='pb-4 pt-2'>
+                <img className='w-full rounded-md'
+                    src="https://picsum.photos/400/200"
+                    alt="img"
+                />
+            </div>
+            <div className='text-white text-sm font-semibold'>
+                {title}
+            </div>
+            <div className='text-gray-500 text-sm '>
+                {description}
+
+            </div>
+
+        </div>
+    )
 }
 export default Home;
