@@ -1,10 +1,52 @@
 import logo from '../logo.png'
-import TextInput from "../components/shared/TextInput";
 import "./login.css";
-import {Link} from "react-router-dom";
+import {useCookies} from "react-cookie";
+//import { useNavigate } from 'react-router-dom';
+import TextInput from "../components/shared/TextInput";
+import { Link,  useNavigate} from "react-router-dom";
 import PasswordInput from "../components/shared/PasswordInput";
+import { useState } from 'react';
+import { makeUnauthenticatedPOSTRequest } from '../utils/ServerHelpers';
 
 const SignupComponent = () => {
+
+    const [email, setEmail] = useState("");
+    const [confirmEmail, setConfirmEmail] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+
+    const [ cookie, setCookie] = useCookies(["token"]);
+    const navigate = useNavigate();
+
+    const signup = async (e) => {
+        e.preventDefault();
+        if (email != confirmEmail) {
+            alert("email and conform email d=field must match, Please check again");
+            return;
+        }
+        const data = {
+            email, password, username, firstName, lastName
+        }
+        const response = await makeUnauthenticatedPOSTRequest(
+            "/auth/register",
+            data
+        );
+        if (response && !response.err) {
+            //console.log(response);
+            const token = response.token
+            const date = new Date();
+            date.setDate(date.getDate() + 30);
+
+            setCookie("token", token, {path:"/", expires:date});
+           // alert("success");
+            navigate('/home');
+        }
+        else {
+            alert("failure");
+        }
+    }
 
     return (
         <div className="w-full h-full flex flex-col items-center">
@@ -21,12 +63,24 @@ const SignupComponent = () => {
                     label="Email address"
                     placeholder="Enter your email"
                     className="my-6"
+                    value={email}
+                    setValue={setEmail}
                 />
 
                 <TextInput
                     label="Confirm email address"
                     placeholder="Enter your email again"
                     className="mb-6"
+                    value={confirmEmail}
+                    setValue={setConfirmEmail}
+                />
+
+                <TextInput
+                    label="Username"
+                    placeholder="Enter your username"
+                    className="mb-6"
+                    value={username}
+                    setValue={setUsername}
                 />
 
 
@@ -34,16 +88,32 @@ const SignupComponent = () => {
                     label="Password"
                     placeholder="Enter a strong password"
                     className="my-6"
+                    value={password}
+                    setValue={setPassword}
                 />
 
-                <TextInput
-                    label="What should we call you?"
-                    placeholder="Enter a profile name"
-                    className="my-6"
-                />
+
+
+                <div className='w-full flex justify-between items-center space-x-8'>
+
+                    <TextInput
+                        label="First name"
+                        placeholder="Enter your Firstname"
+                        className="my-6"
+                        value={firstName}
+                        setValue={setFirstName}
+                    />
+                    <TextInput
+                        label="Last name"
+                        placeholder="Enter your Lastname"
+                        className="my-6"
+                        value={lastName}
+                        setValue={setLastName}
+                    />
+                </div>
 
                 <div className=" w-full flex items-center justify-center my-8">
-                    <button className="font-semibold p-3 px-10 rounded-full button ">
+                    <button className="font-semibold p-3 px-10 rounded-full button " onClick={signup}>
                         Sign Up
                     </button>
                 </div>
@@ -52,7 +122,7 @@ const SignupComponent = () => {
                     Don't have an account?
                 </div>
                 <div className="border border-gray-500 text-gray-500 w-full flex items-center justify-center py-4 rounded-full font-bold">
-                <Link to="/login">LOG IN INSTEAD</Link>
+                    <Link to="/login">LOG IN INSTEAD</Link>
                 </div>
             </div>
         </div>
