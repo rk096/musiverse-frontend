@@ -1,11 +1,42 @@
+import { useState } from 'react';
 import logo from '../logo.png'
 import TextInput from "../components/shared/TextInput";
-import {Link} from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import './login.css';
 import PasswordInput from "../components/shared/PasswordInput";
+import { makeUnauthenticatedPOSTRequest } from '../utils/ServerHelpers';
+import { useCookies } from "react-cookie";
+
 
 const LoginComponent = () => {
-    
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [cookies, setCookie] = useCookies(["token"]);
+    const navigate = useNavigate();
+
+    const login = async (e) => {
+        e.preventDefault();
+        const data = {
+            email, password
+        }
+        const response = await makeUnauthenticatedPOSTRequest(
+            "/auth/login",
+            data
+        );
+        if (response && !response.err) {
+            //console.log(response);
+            const token = response.token
+            const date = new Date();
+            date.setDate(date.getDate() + 30);
+
+            setCookie("token", token, { path: "/", expires: date });
+            // alert("success");
+            navigate('/home');
+        }
+        else {
+            alert("failure");
+        }
+    }
     return (
         <div className="w-full h-full flex flex-col items-center">
             <div className="logo p-5 border-b border-solid border-gray-300 w-full flex items-center justify-center">
@@ -21,15 +52,19 @@ const LoginComponent = () => {
                     label="Email address or username"
                     placeholder="Email address or username"
                     className="my-6"
+                    value={email}
+                    setValue={setEmail}
                 />
                 <PasswordInput
                     label="Password"
                     placeholder="Password"
+                    value={password}
+                    setValue={setPassword}
                 />
 
 
                 <div className=" w-full flex items-center justify-end my-8">
-                    <button className="font-semibold p-3 px-10 rounded-full button ">
+                    <button className="font-semibold p-3 px-10 rounded-full button " onClick={login}>
                         LOG IN
                     </button>
                 </div>
