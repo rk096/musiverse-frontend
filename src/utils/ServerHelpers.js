@@ -20,7 +20,7 @@ export const makeAuthenticatedPOSTRequest = async (route, body) => {
     const token = getToken();
     const response = await fetch(backendUrl + route, {
         method: "POST",
-        headers: {
+        headers: { 
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
         },
