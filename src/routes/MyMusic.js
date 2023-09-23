@@ -2,9 +2,25 @@ import logo from '../logo.png'
 import IconText from '../components/shared/IconText';
 import TextWithHover from '../components/shared/TextWitHover';
 import { Icon } from "@iconify/react";
+import SingleSongCard from "../components/shared/SingleSongCard";
+import {makeAuthenticatedGETRequest} from "../utils/ServerHelpers";
+import {useState, useEffect} from "react";
 
 
 const MyMusic = () => {
+
+    const [songData, setSongData] = useState([]);
+
+    useEffect(() => {
+        const getData = async () => {
+            const response = await makeAuthenticatedGETRequest(
+                "/song/get/mysongs"
+            );
+            setSongData(response.data);
+        };
+        getData();
+    }, []);
+
 
     return (<div className="h-full w-full flex">
         {/* left panel */}
@@ -35,7 +51,7 @@ const MyMusic = () => {
                     <IconText
                         iconName={"material-symbols:library-music-sharp"}
                         displayText={"My Music"}
-                        active
+                        active 
                     />
                 </div>
                 <div className="pt-5">
@@ -76,8 +92,16 @@ const MyMusic = () => {
                     </div>
                 </div>
             </div>
-           
+            <div className="text-white text-xl font-semibold pb-4 pl-2 pt-8">
+                My Songs
+            </div>
+            <div className="space-y-3 overflow-auto">
+                {songData.map((item) => {
+                    return <SingleSongCard info={item} playSound={() => {}} />;
+                })}
+            </div>
         </div>
+       
     </div>);
 }
 

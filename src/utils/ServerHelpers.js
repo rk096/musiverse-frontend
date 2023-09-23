@@ -52,6 +52,20 @@ export const makeAuthenticatedImageUpload = async (route, imageFile) => {
   };
   
 
+  export const makeAuthenticatedGETRequest = async (route) => {
+    const token = getToken();
+    const response = await fetch(backendUrl + route, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    const formattedResponse = await response.json();
+    return formattedResponse;
+};
+
+
 
 const getToken = () => {
     const accessToken = document.cookie.replace(
