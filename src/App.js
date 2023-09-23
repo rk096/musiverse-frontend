@@ -4,12 +4,13 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginComponent from './routes/Login';
 import SignupComponent from './routes/Signup';
 import HomeComponent from './routes/Home';
-import LoggedInHomeComponent from './routes/LoggedInHome';
 import UploadSong from './routes/UploadSong';
 import { useCookies } from 'react-cookie';
 import MyMusic from './routes/MyMusic';
 import songContext from "./contexts/songContext";
 import {useState} from "react";
+import Home from './routes/Home';
+import LoginHome from './routes/LoggedInHome';
 
 
 
@@ -40,7 +41,7 @@ function App() {
           >
             <Routes>
               <Route path="/" element={<div className='bg-blue-500'>hello</div>} />
-              <Route path="/home" element={<LoggedInHomeComponent />} />
+              <Route path="/home" element={<LoginHome />} />
               <Route path="/uploadSong" element={<UploadSong />} />
               <Route path="/mymusic" element={<MyMusic />} />
               <Route path="*" element={<Navigate to="/home" />} />
