@@ -30,6 +30,27 @@ export const makeAuthenticatedPOSTRequest = async (route, body) => {
     return formattedResponse;
 };
 
+export const makeAuthenticatedImageUpload = async (route, imageFile) => {
+    const token = getToken();
+    const formData = new FormData();
+    formData.append('image', imageFile);
+  
+    const response = await fetch(backendUrl + route, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+  
+    if (response.ok) {
+      const formattedResponse = await response.json();
+      return formattedResponse;
+    } else {
+      throw new Error('Failed to upload image');
+    }
+  };
+  
 
 
 const getToken = () => {
