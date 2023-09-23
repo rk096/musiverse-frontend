@@ -11,6 +11,7 @@ import songContext from "./contexts/songContext";
 import {useState} from "react";
 import Home from './routes/Home';
 import LoginHome from './routes/LoggedInHome';
+import SearchPage from "./routes/SearchPage";
 
 
 
@@ -44,6 +45,8 @@ function App() {
               <Route path="/home" element={<LoginHome />} />
               <Route path="/uploadSong" element={<UploadSong />} />
               <Route path="/mymusic" element={<MyMusic />} />
+              <Route path="/search" element={<SearchPage />} />
+
               <Route path="*" element={<Navigate to="/home" />} />
               <></>
             </Routes>
