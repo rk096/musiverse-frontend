@@ -1,3 +1,5 @@
+import upImg from './upload-image-icon.jpg'
+
 const ImageUpload = ({ setImg }) => {
     const handleFileChange = (e) => {
         setImg(e.target.files[0]);
@@ -25,7 +27,7 @@ const ImageUpload = ({ setImg }) => {
                     display: 'inline-block',
                 }}
             >
-                Choose Image
+                <img src={upImg} alt=""/>
             </label>
         </>
     );

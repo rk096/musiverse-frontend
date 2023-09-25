@@ -46,17 +46,18 @@ const UploadSong = () => {
     };
 
     return (
-     
+
         <LoggedInContainer curActiveScreen="UploadSong">
-            <div className='content p-8 overflow-auto'>
+            <div className='  content-center p-8 overflow-auto'>
 
                 <div className='text-2xl font-semibold mb-5 text-white mt-8'>
                     Upload Your Music
                 </div>
-                <div className="w-2/3">
-                    <div className="w-1/2 my-8">
+                <div className=" w-2/3">
+                    <div className="flex space-x-16 w-1/2 my-8">
+                        <span className=' text-white my-4'>Name:
+                        </span>
                         <TextInput
-                            // label="Name"
                             labelClassName={"text-white"}
                             placeholder="Name"
                             value={name}
@@ -64,15 +65,16 @@ const UploadSong = () => {
                         />
                     </div>
                 </div>
-                <div className='flex items-center'>
+                <div className='items-center'>
 
-                    <div>
+                    <div className="flex space-x-5">
+                        <label className="text-white ">Thumbnail:</label>
                         <ImageUpload setImg={setThumbnail} />
                     </div>
-                    <div className='pt-5'>
-
+                    <div className='pt-5 flex space-x-5'>
+                        <label className="text-white ">Slect Track:</label>
                         {uploadedSongFileName ? (
-                            <div className="bg-white rounded-full p-3 w-1/3">
+                            <div className="bg-white rounded-full p-3 w-1/4">
                                 {uploadedSongFileName.substring(0, 35)}...
                             </div>
                         ) : (
@@ -93,11 +95,10 @@ const UploadSong = () => {
                 </div>
 
             </div>
-    
-    </LoggedInContainer>
-    
+        </LoggedInContainer>
+
     );
-    
+
 }
 
 

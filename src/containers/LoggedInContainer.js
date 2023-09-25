@@ -1,21 +1,19 @@
 import { useContext, useState, useLayoutEffect, useRef } from "react";
-import {Link} from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import { Howl, Howler } from "howler";
 import { Icon } from "@iconify/react";
 import IconText from "../components/shared/IconText";
 import songContext from "../contexts/songContext";
-// import CreatePlaylistModal from "../modals/CreatePlaylistModal";
-// import AddToPlaylistModal from "../modals/AddToPlaylistModal";
-//import { makeAuthenticatedPOSTRequest } from "../utils/ServerHelpers";
+import CreatePlaylistModal from "../modals/CreatePlaylistModal";
+import AddToPlaylistModal from "../modals/AddToPlaylistModal";
+import { makeAuthenticatedPOSTRequest } from "../utils/ServerHelpers";
 import TextWithHover from "../components/shared/TextWitHover";
 import logo from '../logo.png'
 import { backendUrl } from "../utils/Config";
 
 const LoggedInContainer = ({ children, curActiveScreen }) => {
-    // const [createPlaylistModalOpen, setCreatePlaylistModalOpen] =
-    //     useState(false);
-    // const [addToPlaylistModalOpen, setAddToPlaylistModalOpen] = useState(false);
+    const [createPlaylistModalOpen, setCreatePlaylistModalOpen] = useState(false);
+    const [addToPlaylistModalOpen, setAddToPlaylistModalOpen] = useState(false);
     let formattedUrl;
 
     const {
@@ -39,37 +37,37 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
         if (!currentSong) {
             return;
         }
-        
+
         changeSong(currentSong.track);
-        
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSong && currentSong.track]);
-    
-    if(currentSong){
-        formattedUrl  = backendUrl +"/uploads//" + currentSong.thumbnail.toString().slice(8,);
+
+    if (currentSong) {
+        formattedUrl = backendUrl + "/uploads//" + currentSong.thumbnail.toString().slice(8,);
     }
-    // const addSongToPlaylist = async (playlistId) => {
-        //     const songId = currentSong._id;
-    
-        //     const payload = { playlistId, songId };
-        //     const response = await makeAuthenticatedPOSTRequest(
-        //         "/playlist/add/song",
-        //         payload
-        //     );
-        //     if (response._id) {
-            //         setAddToPlaylistModalOpen(false)
-            //     }
-            // };
-            
-            const playSound = () => {
-                if (!soundPlayed) {
-                    return;
-                }
-                soundPlayed.play();
-            };
-            
-            const changeSong = (songSrc) => {
-                if (soundPlayed) {
+    const addSongToPlaylist = async (playlistId) => {
+        const songId = currentSong._id;
+
+        const payload = { playlistId, songId };
+        const response = await makeAuthenticatedPOSTRequest(
+            "/playlist/add/song",
+            payload
+        );
+        if (response._id) {
+            setAddToPlaylistModalOpen(false)
+        }
+    };
+
+    const playSound = () => {
+        if (!soundPlayed) {
+            return;
+        }
+        soundPlayed.play();
+    };
+
+    const changeSong = (songSrc) => {
+        if (soundPlayed) {
             soundPlayed.stop();
         }
         let sound = new Howl({
@@ -80,7 +78,7 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
         sound.play();
         setIsPaused(false);
     };
-    
+
     const pauseSound = () => {
         soundPlayed.pause();
     };
@@ -94,13 +92,13 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
             setIsPaused(true);
         }
     };
-    
+
     //1console.log(formattedUrl + " hello");
-    
-    
+
+
     return (
         <div className="h-full w-full bg-app-black">
-            {/* {createPlaylistModalOpen && (
+            {createPlaylistModalOpen && (
                 <CreatePlaylistModal
                     closeModal={() => {
                         setCreatePlaylistModalOpen(false);
@@ -114,7 +112,7 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
                     }}
                     addSongToPlaylist={addSongToPlaylist}
                 />
-            )} */}
+            )}
             <div className={`${currentSong ? "h-9/10" : "h-full"} w-full flex`}>
                 {/* This first div will be the left panel */}
                 <div className="h-full w-1/5 bg-black flex flex-col justify-between pb-10">
@@ -153,7 +151,7 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
                                 active={curActiveScreen === "myMusic"}
                             />
                         </div>
-                        {/* <div className="pt-5">
+                        <div className="pt-5">
                             <IconText
                                 iconName={"material-symbols:add-box"}
                                 displayText={"Create Playlist"}
@@ -165,7 +163,7 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
                                 iconName={"mdi:cards-heart"}
                                 displayText={"Liked Songs"}
                             />
-                        </div> */}
+                        </div>
                     </div>
                     <div className="px-5">
                         <div className="border border-gray-100 text-white w-2/5 flex px-2 py-1 rounded-full items-center justify-center hover:border-white cursor-pointer">
@@ -187,9 +185,9 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
                                 <div className="h-1/2 border-r border-white"></div>
                             </div>
                             <div className="w-1/3 flex justify-around h-full items-center">
-                            <Link to="/uploadsong">
-                                <TextWithHover displayText={"Upload Song"} active={curActiveScreen === "UploadSong"}
-                                />
+                                <Link to="/uploadsong">
+                                    <TextWithHover displayText={"Upload Song"} active={curActiveScreen === "UploadSong"}
+                                    />
                                 </Link>
                                 <div className="bg-white w-10 h-10 flex items-center justify-center rounded-full font-semibold cursor-pointer">
                                     AC
@@ -258,7 +256,7 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
                         </div>
                         {/* <div>Progress Bar Here</div> */}
                     </div>
-                    {/* <div className="w-1/4 flex justify-end pr-4 space-x-4 items-center">
+                    <div className="w-1/4 flex justify-end pr-4 space-x-4 items-center">
                         <Icon
                             icon="ic:round-playlist-add"
                             fontSize={30}
@@ -272,7 +270,7 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
                             fontSize={25}
                             className="cursor-pointer text-gray-500 hover:text-white"
                         />
-                    </div> */}
+                    </div>
                 </div>
             )}
         </div>

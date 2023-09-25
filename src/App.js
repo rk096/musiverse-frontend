@@ -12,7 +12,8 @@ import {useState} from "react";
 import Home from './routes/Home';
 import LoginHome from './routes/LoggedInHome';
 import SearchPage from "./routes/SearchPage";
-
+import Library from "./routes/Library";
+import SinglePlaylistView from './routes/SinglePlaylistView';
 
 
 function App() {
@@ -46,7 +47,11 @@ function App() {
               <Route path="/uploadSong" element={<UploadSong />} />
               <Route path="/mymusic" element={<MyMusic />} />
               <Route path="/search" element={<SearchPage />} />
-
+              <Route path="/library" element={<Library />} />
+              <Route
+                                path="/playlist/:playlistId"
+                                element={<SinglePlaylistView />}
+                            />
               <Route path="*" element={<Navigate to="/home" />} />
               <></>
             </Routes>
