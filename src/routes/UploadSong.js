@@ -13,12 +13,13 @@ const UploadSong = () => {
     const [thumbnail, setThumbnail] = useState(null);
     const [playlistUrl, setPlaylistUrl] = useState("");
     const [uploadedSongFileName, setUploadedSongFileName] = useState();
+    const [duration , setDuration] = useState("");
     const navigate = useNavigate();
 
 
     const submitSong = async () => {
         let imgPath = "";
-        if (!playlistUrl || !name || !thumbnail) {
+        if (!playlistUrl || !name || !thumbnail || !duration) {
             alert('Please fill all the details');
             return;
         }
@@ -32,7 +33,7 @@ const UploadSong = () => {
             alert('Error uploading image. Please try again.');
         }
 
-        const data = { name, "thumbnail": imgPath, track: playlistUrl, "file": thumbnail };
+        const data = { name, "thumbnail": imgPath, track: playlistUrl, "file": thumbnail , duration:duration};
         const response = await makeAuthenticatedPOSTRequest(
             "/song/create",
             data
@@ -81,6 +82,7 @@ const UploadSong = () => {
                             <CloudinaryUpload
                                 setUrl={setPlaylistUrl}
                                 setName={setUploadedSongFileName}
+                                setTime = {setDuration}
                             />
                         )}
 

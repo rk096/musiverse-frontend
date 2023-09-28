@@ -1,7 +1,18 @@
 import {openUploadWidget} from "../../utils/CloudinaryService";
 import { cloudinary_upload_preset } from "../../Config";
 
-const CloudinaryUpload = ({setUrl, setName}) => {
+const CloudinaryUpload = ({setUrl, setName, setTime}) => {
+
+    function convertSecondsToMinutesAndSeconds(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        let t = minutes + ":" +  remainingSeconds;
+        console.log("time" + t);
+        return  t.slice(0,4);
+      }
+      
+    
+
     const uploadImageWidget = () => {
         let myUploadWidget = openUploadWidget(
             {
@@ -10,7 +21,11 @@ const CloudinaryUpload = ({setUrl, setName}) => {
                 sources: ["local"],
             },
             function (error, result) {
+
                 if (!error && result.event === "success") {
+                    const totalSeconds = result.info.duration; // Example: 125 seconds
+                    let t  = convertSecondsToMinutesAndSeconds(totalSeconds);
+                    setTime(t);
                     setUrl(result.info.secure_url);
                     setName(result.info.original_filename);
                 } else {

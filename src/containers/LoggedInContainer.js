@@ -1,5 +1,5 @@
 import { useContext, useState, useLayoutEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Howl, Howler } from "howler";
 import { Icon } from "@iconify/react";
 import IconText from "../components/shared/IconText";
@@ -10,10 +10,18 @@ import { makeAuthenticatedPOSTRequest } from "../utils/ServerHelpers";
 import TextWithHover from "../components/shared/TextWitHover";
 import logo from '../logo.png'
 import { backendUrl } from "../utils/Config";
+import nameContext from "../contexts/usernameContext";
+import { useCookies } from "react-cookie";
+//import { removeCookie } from 'js-cookie'; // Example import for js-cookie
+
+
+
 
 const LoggedInContainer = ({ children, curActiveScreen }) => {
     const [createPlaylistModalOpen, setCreatePlaylistModalOpen] = useState(false);
     const [addToPlaylistModalOpen, setAddToPlaylistModalOpen] = useState(false);
+    const navigate = useNavigate();
+    const [cookies, setCookie, removeCookie] = useCookies(["token"]);
     let formattedUrl;
 
     const {
@@ -25,9 +33,12 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
         setIsPaused,
     } = useContext(songContext);
 
+    const {name, setName} = useContext(nameContext);
+
     const firstUpdate = useRef(true);
 
     useLayoutEffect(() => {
+        console.log("useeffect " + currentSong);
         // the following if statement will prevent the useEffect from running on the first render.
         if (firstUpdate.current) {
             firstUpdate.current = false;
@@ -93,6 +104,16 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
         }
     };
 
+
+    const logout = () => {
+       console.log("logout");
+       //setCookie(null);
+        removeCookie("token", { path: "/"}); 
+        setName(""); 
+        navigate('/login');
+        
+      }
+      
     //1console.log(formattedUrl + " hello");
 
 
@@ -181,7 +202,9 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
                             <div className="w-2/3 flex justify-around items-center">
                                 <TextWithHover displayText={"Premium"} />
                                 <TextWithHover displayText={"Support"} />
-                                <TextWithHover displayText={"Download"} />
+                                <div onClick={logout}>
+                                <TextWithHover displayText={"Log out"}/>
+                                </div>
                                 <div className="h-1/2 border-r border-white"></div>
                             </div>
                             <div className="w-1/3 flex justify-around h-full items-center">
@@ -190,7 +213,8 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
                                     />
                                 </Link>
                                 <div className="bg-white w-10 h-10 flex items-center justify-center rounded-full font-semibold cursor-pointer">
-                                    AC
+                                    {name}
+                                   
                                 </div>
                             </div>
                         </div>

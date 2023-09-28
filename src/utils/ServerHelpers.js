@@ -65,6 +65,17 @@ export const makeAuthenticatedImageUpload = async (route, imageFile) => {
     return formattedResponse;
 };
 
+export const makeUnAuthenticatedGETRequest = async (route) => {
+  const response = await fetch(backendUrl + route, {
+      method: "GET",
+      headers: {
+          "Content-Type": "application/json",
+      },
+  });
+  const formattedResponse = await response.json();
+  console.log(formattedResponse);
+  return formattedResponse;
+};
 
 
 const getToken = () => {

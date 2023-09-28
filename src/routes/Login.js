@@ -6,13 +6,16 @@ import './login.css';
 import PasswordInput from "../components/shared/PasswordInput";
 import { makeUnauthenticatedPOSTRequest } from '../utils/ServerHelpers';
 import { useCookies } from "react-cookie";
-
+import {useContext} from "react";
+import nameContext from '../contexts/usernameContext';
 
 const LoginComponent = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [cookies, setCookie] = useCookies(["token"]);
     const navigate = useNavigate();
+    const {name, setName} = useContext(nameContext);
+
 
     const login = async (e) => {
         e.preventDefault();
@@ -24,7 +27,16 @@ const LoginComponent = () => {
             data
         );
         if (response && !response.err) {
-            //console.log(response);
+            // console.log(response);
+             let fname = response.firstName; 
+            let  lname =  response.lastName;
+             let nm = fname.slice(0,1) + lname.slice(0,1);
+             //  console.log(fname);
+             // console.log(lname);
+             setName(nm);
+             console.log(name);
+            
+           // console.log(response);
             const token = response.token
             const date = new Date();
             date.setDate(date.getDate() + 30);

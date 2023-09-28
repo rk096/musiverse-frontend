@@ -14,11 +14,11 @@ const SinglePlaylistView = () => {
                 "/playlist/get/playlist/" + playlistId
             );
             setPlaylistDetails(response);
-            console.log(response);
+            // console.log(response);
         };
         getData();
     }, []);
-    console.log(playlistDetails.songs);
+    console.log(playlistDetails);
 
     return (
         <LoggedInContainer curActiveScreen={"library"}>
@@ -41,7 +41,8 @@ const SinglePlaylistView = () => {
                 </div>
             )}
         </LoggedInContainer>
-    );
+   );
+  
 };
 
 export default SinglePlaylistView;

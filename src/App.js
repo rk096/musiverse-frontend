@@ -8,7 +8,8 @@ import UploadSong from './routes/UploadSong';
 import { useCookies } from 'react-cookie';
 import MyMusic from './routes/MyMusic';
 import songContext from "./contexts/songContext";
-import {useState} from "react";
+import nameContext from './contexts/usernameContext';
+import { useState } from "react";
 import Home from './routes/Home';
 import LoginHome from './routes/LoggedInHome';
 import SearchPage from "./routes/SearchPage";
@@ -22,6 +23,7 @@ function App() {
   //console.log(Cookie);
   const [currentSong, setCurrentSong] = useState(null);
   const [soundPlayed, setSoundPlayed] = useState(null);
+  const [name, setName] = useState(null);
   const [isPaused, setIsPaused] = useState(true);
 
   return (
@@ -41,21 +43,30 @@ function App() {
               setIsPaused,
             }}
           >
-            <Routes>
-              <Route path="/" element={<div className='bg-blue-500'>hello</div>} />
-              <Route path="/home" element={<LoginHome />} />
-              <Route path="/uploadSong" element={<UploadSong />} />
-              <Route path="/mymusic" element={<MyMusic />} />
-              <Route path="/search" element={<SearchPage />} />
-              <Route path="/library" element={<Library />} />
-              <Route
-                                path="/playlist/:playlistId"
-                                element={<SinglePlaylistView />}
-                            />
-              <Route path="*" element={<Navigate to="/home" />} />
-              <></>
-            </Routes>
+            <nameContext.Provider
+              value={{
+                name,
+                setName,
+              }}>
+
+              <Routes>
+                <Route path="/" element={<div className='bg-blue-500'>hello</div>} />
+                <Route path="/home" element={<LoginHome />} />
+                <Route path="/uploadSong" element={<UploadSong />} />
+                <Route path="/mymusic" element={<MyMusic />} />
+                <Route path="/search" element={<SearchPage />} />
+                <Route path="/library" element={<Library />} />
+                <Route
+                  path="/playlist/:playlistId"
+                  element={<SinglePlaylistView />}
+                />
+
+                <Route path="*" element={<Navigate to="/home" />} />
+                <></>
+              </Routes>
+            </nameContext.Provider>
           </songContext.Provider>
+
 
         ) : (
           // logged out routes

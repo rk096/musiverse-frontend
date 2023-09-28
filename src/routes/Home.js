@@ -2,6 +2,7 @@ import logo from '../logo.png'
 import IconText from '../components/shared/IconText';
 import TextWithHover from '../components/shared/TextWitHover';
 import { Icon } from "@iconify/react";
+import { Link } from 'react-router-dom';
 
 
 const focusCardsData = [
@@ -98,8 +99,8 @@ const Home = () => {
                     </div>
                     <div className='w-2/5 flex justify-around h-full items-center'>
                         <TextWithHover displayText={"Sign up"} />
-                        <div className='bg-white h-2/3 px-8 flex items-center justify-center rounded-full font-semibold cursor-pointer'>
-                            Log in
+                        <div className='bg-white h-2/3 px-8 flex items-center justify-center rounded-full font-semibold cursor-pointer' >
+                        <Link to="/login">Log in</Link>
                         </div>
                     </div>
                 </div>
