@@ -189,10 +189,10 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
                                     setCreatePlaylistModalOpen(true);
                                 }}
                             />
-                            <IconText
+                            {/* <IconText
                                 iconName={"mdi:cards-heart"}
                                 displayText={"Liked Songs"}
-                            />
+                            /> */}
                         </div>
                     </div>
                     <div className="px-5">

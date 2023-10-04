@@ -22,7 +22,7 @@ const Library = () => {
                 My Playlists
             </div>
             <div className="py-5 grid gap-5 grid-cols-5">
-                {myPlaylists.map((item) => {
+                {myPlaylists.length != 0 ? (myPlaylists.map((item) => {
                     return (
 
                         <Card
@@ -33,7 +33,13 @@ const Library = () => {
                             playlistId={item._id}
                         />
                     );
-                })}
+                }))
+                :(
+                    <div className="text-white text-lg my-4">
+                        <p>There is no Playlist.</p>
+                    </div>
+                )
+                }
             </div>
         </LoggedInContainer>
     );
