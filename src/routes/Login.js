@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import logo from '../logo.png'
 import TextInput from "../components/shared/TextInput";
-import { Link , useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import './login.css';
 import PasswordInput from "../components/shared/PasswordInput";
 import { makeUnauthenticatedPOSTRequest } from '../utils/ServerHelpers';
 import { useCookies } from "react-cookie";
-import {useContext} from "react";
+import { useContext } from "react";
 import nameContext from '../contexts/usernameContext';
 
 const LoginComponent = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [cookies, setCookie] = useCookies(["token"]);
+    const [cookies, setCookie] = useCookies(["token","uname"]);
     const navigate = useNavigate();
-    const {name, setName} = useContext(nameContext);
+    const { uname, setName } = useContext(nameContext);
 
 
     const login = async (e) => {
@@ -28,15 +28,14 @@ const LoginComponent = () => {
         );
         if (response && !response.err) {
             // console.log(response);
-             let fname = response.firstName; 
-            let  lname =  response.lastName;
-             let nm = fname.slice(0,1) + lname.slice(0,1);
-             //  console.log(fname);
-             // console.log(lname);
-             setName(nm);
-             console.log(name);
-            
-           // console.log(response);
+            let fname = response.firstName;
+            let lname = response.lastName;
+            let nm = fname.slice(0, 1) + lname.slice(0, 1);
+            setCookie("uname",nm);
+            setName(nm);
+            console.log(uname);
+
+
             const token = response.token
             const date = new Date();
             date.setDate(date.getDate() + 30);

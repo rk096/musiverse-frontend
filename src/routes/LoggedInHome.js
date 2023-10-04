@@ -1,5 +1,5 @@
 import LoggedInContainer from "../containers/LoggedInContainer";
-import {useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 // import songContext from "../contexts/songContext";
 // import { CloudConfig } from "@cloudinary/url-gen";
 // import HomeViewCard from "../components/shared/HomeView";
@@ -7,9 +7,9 @@ import HomeViewCard from "../components/shared/homeView";
 import { makeUnAuthenticatedGETRequest } from "../utils/ServerHelpers";
 
 const playlistdata = [
-    { titleText: "Focus"},
-    { titleText: "Calm"},
-    { titleText: "Meditation"}
+    { titleText: "Trending Bollywood" },
+    { titleText: "Lofi" },
+    { titleText: "Hollywood" }
 ];
 
 const LoginHome = () => {
@@ -26,13 +26,13 @@ const LoginHome = () => {
     }, []);
     return (
         <LoggedInContainer curActiveScreen="home">
-             {
-                    playlistdata.map((item) => {
-                        return (
-                            <PlaylistView titleText={item.titleText} cardsData={songData} />
-                        );
-                    })
-                }
+            {playlistdata.map((item, index) => {
+                const startIndex = index * 5;
+                const endIndex = startIndex + 5;
+                const slicedCardsData = songData.slice(startIndex, endIndex);
+
+                return <PlaylistView titleText={item.titleText} cardsData={slicedCardsData} />;
+            })}
         </LoggedInContainer>
     );
 };
@@ -48,12 +48,13 @@ const PlaylistView = ({ titleText, cardsData }) => {
             <div className='w-full flex space-x-4'>
 
                 {cardsData.map((item) => {
+                  //  console.log(item);
                     return (
                         <HomeViewCard
-                                    info={item}
-                                    key={JSON.stringify(item)}
-                                    playSound={() => {}}
-                                />
+                            info={item}
+                            key={JSON.stringify(item)}
+                            playSound={() => { }}
+                        />
                         /* <Card
                         item = {item} playSound={() => {}}
                         /> */

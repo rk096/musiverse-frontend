@@ -73,7 +73,7 @@ export const makeUnAuthenticatedGETRequest = async (route) => {
       },
   });
   const formattedResponse = await response.json();
-  console.log(formattedResponse);
+ // console.log(formattedResponse);
   return formattedResponse;
 };
 

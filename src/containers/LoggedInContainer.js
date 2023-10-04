@@ -1,4 +1,4 @@
-import { useContext, useState, useLayoutEffect, useRef } from "react";
+import { useContext, useState, useLayoutEffect, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Howl, Howler } from "howler";
 import { Icon } from "@iconify/react";
@@ -12,6 +12,8 @@ import logo from '../logo.png'
 import { backendUrl } from "../utils/Config";
 import nameContext from "../contexts/usernameContext";
 import { useCookies } from "react-cookie";
+import Cookies from 'js-cookie';
+
 //import { removeCookie } from 'js-cookie'; // Example import for js-cookie
 
 
@@ -21,8 +23,11 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
     const [createPlaylistModalOpen, setCreatePlaylistModalOpen] = useState(false);
     const [addToPlaylistModalOpen, setAddToPlaylistModalOpen] = useState(false);
     const navigate = useNavigate();
-    const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+    const [cookies, setCookie, removeCookie,readCookie] = useCookies(["token"]);
     let formattedUrl;
+
+    let username= Cookies.get('uname')
+    //console.log('Value of uname cookie:',username);
 
     const {
         currentSong,
@@ -36,6 +41,8 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
     const {name, setName} = useContext(nameContext);
 
     const firstUpdate = useRef(true);
+
+    
 
     useLayoutEffect(() => {
         console.log("useeffect " + currentSong);
@@ -109,8 +116,10 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
        console.log("logout");
        //setCookie(null);
         removeCookie("token", { path: "/"}); 
+        removeCookie("uname", { path: "/"}); 
         setName(""); 
         navigate('/login');
+
         
       }
       
@@ -213,7 +222,7 @@ const LoggedInContainer = ({ children, curActiveScreen }) => {
                                     />
                                 </Link>
                                 <div className="bg-white w-10 h-10 flex items-center justify-center rounded-full font-semibold cursor-pointer">
-                                    {name}
+                                    {username}
                                    
                                 </div>
                             </div>

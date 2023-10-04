@@ -13,7 +13,7 @@ const HomeViewCard = ({ info, playSound }) => {
             }}
         >
             <div className='pb-4 pt-2'>
-                <img className='w-full rounded-md h-50'
+                <img className='w-full rounded-md h-50' 
                     src={formattedUrl}
                     alt="img"
                 />             

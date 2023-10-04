@@ -1,17 +1,17 @@
-import {openUploadWidget} from "../../utils/CloudinaryService";
+import { openUploadWidget } from "../../utils/CloudinaryService";
 import { cloudinary_upload_preset } from "../../Config";
-
-const CloudinaryUpload = ({setUrl, setName, setTime}) => {
+import upImg from './upload-audio-icon.png'
+const CloudinaryUpload = ({ setUrl, setName, setTime }) => {
 
     function convertSecondsToMinutesAndSeconds(seconds) {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
-        let t = minutes + ":" +  remainingSeconds;
+        let t = minutes + ":" + remainingSeconds;
         console.log("time" + t);
-        return  t.slice(0,4);
-      }
-      
-    
+        return t.slice(0, 4);
+    }
+
+
 
     const uploadImageWidget = () => {
         let myUploadWidget = openUploadWidget(
@@ -24,7 +24,7 @@ const CloudinaryUpload = ({setUrl, setName, setTime}) => {
 
                 if (!error && result.event === "success") {
                     const totalSeconds = result.info.duration; // Example: 125 seconds
-                    let t  = convertSecondsToMinutesAndSeconds(totalSeconds);
+                    let t = convertSecondsToMinutesAndSeconds(totalSeconds);
                     setTime(t);
                     setUrl(result.info.secure_url);
                     setName(result.info.original_filename);
@@ -40,10 +40,19 @@ const CloudinaryUpload = ({setUrl, setName, setTime}) => {
 
     return (
         <button
-            className="bg-white text-black  rounded-full p-2 w-1/7 font-semibold"
+            className="bg-white text-black rounded-full p-2 font-semibold flex items-center justify-center"
             onClick={uploadImageWidget}
         >
-            Select Track
+            <img src={upImg} style={{
+                background: 'white',
+                color: 'black',
+                border: 'none',
+                padding: '3px 3px',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                display: 'inline-block',
+            }}
+                alt="upload audio" />
         </button>
     );
 };
